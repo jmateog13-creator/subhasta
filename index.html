@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c2e24">
+<title>La subhasta · Tutoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  --tapet:#0c2e24; --tapet2:#123d30; --placa:#164a3a; --linia:#2a6450;
+  --or:#d9b05b; --or2:#f3d58b; --crema:#f5eedc; --suau:#b9cfc3; --fosc:#0a1f18; --vermell:#e5534b;
+  --display:"DM Serif Display",Georgia,"Times New Roman",serif;
+  --text:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--tapet);color:var(--crema);font:400 19px/1.5 var(--text);
+  background-image:radial-gradient(1100px 700px at 50% -10%,#1d5a46,transparent 70%),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E")}
+button,input{font:inherit;color:inherit}
+h1,h2,h3{font-family:var(--display);font-weight:400;margin:0;line-height:1.02;text-wrap:balance}
+p{margin:0}
+:focus-visible{outline:3px solid var(--or2);outline-offset:3px}
+.vista{min-height:100%;max-width:1320px;margin:0 auto;padding:28px clamp(16px,3vw,40px) 40px;display:flex;flex-direction:column;gap:26px}
+.eyebrow{font-weight:700;font-size:14px;letter-spacing:.14em;text-transform:uppercase;color:var(--or)}
+.marca{font:400 30px var(--display)}
+.marca i{color:var(--or)}
+.btn{border:1.5px solid var(--linia);border-radius:12px;padding:12px 22px;font-weight:700;font-size:18px;background:var(--tapet2);cursor:pointer;transition:transform .05s,background .15s}
+.btn:hover{background:var(--placa)}
+.btn:active{transform:translateY(2px)}
+.btn.or{background:linear-gradient(180deg,var(--or2),var(--or));color:var(--fosc);border-color:var(--or)}
+.btn.gran{font-size:22px;padding:15px 28px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.tecla{font-size:13px;opacity:.75;margin-left:8px;border:1px solid currentColor;border-radius:6px;padding:0 6px}
+.centre{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:18px}
+.centre p{color:var(--suau);max-width:52ch}
+.centre a{color:var(--or2);font-weight:700}
+
+/* formes d'equip: color + forma + nom (DUA) */
+.forma{width:1em;height:1em;display:inline-block;flex:none;background:var(--c)}
+.f-triangle{clip-path:polygon(50% 5%,97% 93%,3% 93%)}
+.f-rombe{clip-path:polygon(50% 2%,98% 50%,50% 98%,2% 50%)}
+.f-cercle{border-radius:50%}
+.f-quadrat{transform:scale(.86)}
+.f-estrella{clip-path:polygon(50% 2%,61% 36%,98% 36%,68% 58%,79% 94%,50% 72%,21% 94%,32% 58%,2% 36%,39% 36%)}
+.f-hexagon{clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%)}
+.xip-equip{display:inline-flex;align-items:center;gap:8px;font-weight:700}
+
+/* inici */
+.capcal h1{font-size:clamp(52px,8vw,108px)}
+.capcal h1 i{color:var(--or)}
+.capcal p{color:var(--suau);max-width:62ch;margin-top:12px}
+.fila-opcions{display:flex;gap:24px;flex-wrap:wrap;align-items:center}
+.segment{display:flex;gap:6px;background:var(--tapet2);border:1.5px solid var(--linia);border-radius:14px;padding:5px}
+.segment button{border:0;background:none;border-radius:10px;padding:8px 16px;font-weight:700;cursor:pointer}
+.segment button[aria-pressed="true"]{background:var(--or);color:var(--fosc)}
+.check-l{display:flex;align-items:center;gap:10px;font-weight:700;cursor:pointer}
+.check-l input{width:22px;height:22px;accent-color:var(--or)}
+.lots{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.lotc{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:center;text-align:left;background:var(--tapet2);border:1.5px solid var(--linia);border-radius:14px;padding:14px;cursor:pointer;transition:opacity .15s,border-color .15s}
+.lotc[aria-pressed="false"]{opacity:.42}
+.lotc[aria-pressed="true"]{border-color:var(--or)}
+.lotc .em{font-size:30px}
+.lotc b{display:block}
+.lotc small{color:var(--suau)}
+.barra-accions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;position:sticky;bottom:0;padding-block:14px;background:linear-gradient(transparent,var(--tapet) 30%)}
+
+/* sala */
+.sala{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:36px;align-items:center;background:var(--tapet2);border:1.5px solid var(--linia);border-radius:26px;padding:clamp(22px,4vw,44px)}
+@media (max-width:820px){.sala{grid-template-columns:1fr}}
+.sala .url{font:400 clamp(24px,3vw,36px) var(--display);color:var(--or2);word-break:break-all}
+.sala .codi{font:400 clamp(84px,12vw,160px)/1 var(--display);letter-spacing:.06em}
+.qr{background:#fff;padding:14px;border-radius:16px;line-height:0;justify-self:start;width:max-content}
+.equips{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px}
+.equip{--c:#fff;background:var(--tapet2);border:2px solid var(--linia);border-radius:16px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+.equip.ocupat{border-color:var(--c);box-shadow:inset 0 0 0 1px var(--c)}
+.equip .nom{display:flex;align-items:center;gap:10px;font:400 24px var(--display)}
+.equip .estat{font-size:15px;color:var(--suau)}
+.equip.ocupat .estat{color:var(--crema)}
+.equip .alliberar{align-self:flex-start;font-size:13px;padding:4px 10px;border-radius:8px}
+.nota{background:var(--tapet2);border-left:4px solid var(--or);border-radius:10px;padding:12px 16px;color:var(--suau);max-width:72ch}
+.nota b{color:var(--crema)}
+.comandament{margin-top:auto;display:flex;gap:12px;justify-content:space-between;align-items:center;flex-wrap:wrap}
+
+/* lot */
+.saldos{display:flex;gap:10px;flex-wrap:wrap}
+.saldo{--c:#fff;display:flex;align-items:center;gap:8px;background:var(--tapet2);border:1.5px solid var(--linia);border-radius:12px;padding:6px 12px;font-weight:700;font-variant-numeric:tabular-nums}
+.saldo.lider{border-color:var(--c);background:color-mix(in srgb,var(--c) 22%,var(--tapet2))}
+.saldo b{font:400 22px var(--display)}
+.escenari{flex:1;display:grid;grid-template-columns:1.25fr 1fr;gap:clamp(20px,4vw,56px);align-items:center}
+@media (max-width:980px){.escenari{grid-template-columns:1fr}}
+.lot{display:flex;flex-direction:column;gap:14px}
+.lot .em{font-size:clamp(60px,8vw,110px);line-height:1}
+.lot h2{font-size:clamp(46px,6.4vw,92px)}
+.lot p{font-size:clamp(20px,2vw,28px);color:var(--suau);max-width:34ch}
+.taula{position:relative;background:linear-gradient(180deg,#174d3c,#0f3a2d);border:2px solid var(--or);border-radius:26px;padding:clamp(20px,3vw,34px);display:flex;flex-direction:column;gap:12px;min-height:320px;justify-content:center;box-shadow:0 20px 50px #0007,inset 0 1px 0 #ffffff1a}
+.taula .eyebrow{color:var(--or2)}
+.puja{font:400 clamp(70px,9vw,128px)/1 var(--display);font-variant-numeric:tabular-nums}
+.puja small{font-size:.38em;color:var(--or2);margin-left:8px}
+.qui{display:flex;align-items:center;gap:10px;font:700 clamp(20px,2vw,26px) var(--text);min-height:1.4em}
+.compte{display:flex;align-items:center;gap:16px}
+.rellotge{--p:1;width:76px;height:76px;border-radius:50%;background:conic-gradient(var(--or) calc(var(--p)*360deg),#ffffff22 0);display:grid;place-items:center;flex:none}
+.rellotge span{width:60px;height:60px;border-radius:50%;background:#0f3a2d;display:grid;place-items:center;font:400 30px var(--display)}
+.frase-compte{font:400 italic clamp(26px,2.6vw,38px) var(--display);color:var(--or2)}
+.segell{position:absolute;inset:auto 18px 18px auto;transform:rotate(-10deg);border:5px solid var(--c,var(--or));color:var(--c,var(--or));border-radius:10px;padding:4px 16px;font:400 clamp(28px,3.4vw,46px) var(--display);letter-spacing:.06em;background:#0f3a2dee;animation:cop .35s cubic-bezier(.2,1.6,.4,1) both}
+@keyframes cop{from{transform:rotate(-10deg) scale(2.2);opacity:0}}
+.martell{font-size:46px;display:inline-block;transform-origin:80% 80%}
+.martell.pica{animation:pica .45s ease-out}
+@keyframes pica{30%{transform:rotate(-40deg)}60%{transform:rotate(8deg)}}
+
+/* final */
+.final{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:start}
+@media (max-width:980px){.final{grid-template-columns:1fr}}
+.bloc{background:var(--tapet2);border:1.5px solid var(--linia);border-radius:20px;padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+.bloc h3{font-size:30px}
+.compres{display:flex;flex-direction:column;gap:12px}
+.compra{--c:#fff;border-left:5px solid var(--c);padding-left:12px;display:flex;flex-direction:column;gap:2px}
+.compra .titol{display:flex;align-items:center;gap:8px;font:400 22px var(--display)}
+.compra ul{margin:0;padding-left:18px;color:var(--suau);font-size:17px}
+.compra .sobra{font-size:15px;color:var(--suau)}
+.ranq{display:flex;flex-direction:column;gap:8px}
+.r{display:grid;grid-template-columns:auto minmax(0,1fr) 5ch;gap:10px;align-items:center;font-weight:700;font-size:17px}
+.r .p{grid-column:2;height:12px;border-radius:6px;background:#ffffff1a;overflow:hidden}
+.r .p i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--or),var(--or2));transition:width 1s cubic-bezier(.2,.8,.2,1)}
+.r .n{grid-row:1/3;grid-column:3;text-align:right;font:400 24px var(--display)}
+.r .em{grid-row:1/3;font-size:24px}
+.desert{color:var(--suau);font-size:16px}
+.preguntes{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px}
+.preguntes li{background:#ffffff0f;border-left:4px solid var(--or);border-radius:10px;padding:12px 16px;font:700 clamp(19px,1.8vw,24px)/1.3 var(--text)}
+
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--crema);color:var(--fosc);padding:10px 18px;border-radius:12px;font-weight:700;z-index:9}
+.demo{position:fixed;bottom:10px;left:10px;background:var(--or);color:var(--fosc);font-weight:700;font-size:13px;padding:4px 10px;border-radius:8px;z-index:9}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo" id="demo" hidden>MODE DEMO · equips simulats</div>
+
+
+<section class="vista" id="v-inici" hidden>
+  <div class="capcal">
+    <span class="eyebrow">Tutoria · Valors</span>
+    <h1>La <i>subhasta</i></h1>
+    <p>Cada equip té <b id="i-monedes">1000</b> monedes per comprar el que més valora. El capità puja des del mòbil i l'equip decideix en veu baixa. Al final, la classe veu què ha pagat més car i per què.</p>
+  </div>
+  <div class="fila-opcions">
+    <div style="display:flex;align-items:center;gap:12px"><b>Equips</b><div class="segment" id="i-equips" role="group" aria-label="Nombre d'equips"></div></div>
+    <label class="check-l"><input type="checkbox" id="i-atzar" checked> Ordre aleatori</label>
+  </div>
+  <div class="lots" id="i-lots"></div>
+  <div class="barra-accions">
+    <span class="eyebrow" id="i-n"></span>
+    <button class="btn or gran" id="i-obrir" type="button">Obrir la sala</button>
+  </div>
+</section>
+
+<section class="vista" id="v-sala" hidden>
+  <span class="marca">La <i>subhasta</i></span>
+  <div class="sala">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <p style="color:var(--suau)">Capitans: entreu des del mòbil a</p>
+      <b class="url" id="s-url"></b>
+      <p style="color:var(--suau);margin-top:10px">amb el codi</p>
+      <div class="codi" id="s-codi">····</div>
+    </div>
+    <div class="qr" id="s-qr" aria-label="Codi QR per entrar"></div>
+  </div>
+  <div class="equips" id="s-equips"></div>
+  <p class="nota"><b>Només el capità de cada equip necessita el mòbil.</b> En entrar, tria el color del seu equip. La resta de l'equip decideix amb ell quant pujar. A la pantalla no surt cap nom.</p>
+  <div class="comandament">
+    <button class="btn" id="s-tornar" type="button">← Tornar</button>
+    <button class="btn or gran" id="s-comencar" type="button" disabled>Començar la subhasta</button>
+  </div>
+</section>
+
+<section class="vista" id="v-lot" hidden>
+  <div style="display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap">
+    <span class="eyebrow" id="l-num"></span>
+    <div class="saldos" id="l-saldos"></div>
+  </div>
+  <div class="escenari">
+    <div class="lot">
+      <span class="em" id="l-em"></span>
+      <h2 id="l-nom"></h2>
+      <p id="l-desc"></p>
+    </div>
+    <div class="taula" id="l-taula">
+      <span class="eyebrow" id="l-etiqueta">Preu de sortida</span>
+      <div class="puja" id="l-puja"></div>
+      <div class="qui" id="l-qui"></div>
+      <div class="compte" id="l-compte" hidden>
+        <div class="rellotge" id="l-rellotge"><span id="l-seg"></span></div>
+        <span class="frase-compte" id="l-frase"></span>
+      </div>
+      <div class="segell" id="l-segell" hidden></div>
+    </div>
+  </div>
+  <div class="comandament">
+    <button class="btn" id="l-acabar" type="button">Acabar la subhasta</button>
+    <div style="display:flex;gap:12px;flex-wrap:wrap">
+      <button class="btn" id="l-desert" type="button" hidden>Declarar desert</button>
+      <button class="btn or gran" id="l-accio" type="button"></button>
+    </div>
+  </div>
+</section>
+
+<section class="vista" id="v-final" hidden>
+  <div class="capcal">
+    <span class="eyebrow">Adjudicat</span>
+    <h1 style="font-size:clamp(44px,6vw,80px)">Això és el que valora <i>la classe</i></h1>
+  </div>
+  <div class="final">
+    <div class="bloc"><h3>Qui s'ha quedat què</h3><div class="compres" id="f-compres"></div></div>
+    <div class="bloc"><h3>El rànquing</h3><div class="ranq" id="f-ranq"></div><p class="desert" id="f-desert"></p></div>
+  </div>
+  <div class="bloc"><h3>Per debatre</h3><ul class="preguntes" id="f-debat"></ul></div>
+  <div class="comandament">
+    <button class="btn" id="f-nova" type="button">Nova subhasta</button>
+    <button class="btn or gran" id="f-tancar" type="button">Tancar la sala</button>
+  </div>
+</section>
+
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script type="module">
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const VISTES = ['#v-inici', '#v-sala', '#v-lot', '#v-final'];
+const mostrar = id => VISTES.forEach(v => $(v).hidden = v !== id);
+let toastT;
+const toast = (m, ms = 2400) => { const t = $('#toast'); t.textContent = m; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => t.hidden = true, ms); };
+const fmt = n => n.toLocaleString('ca');
+const forma = e => `<span class="forma f-${e.forma}" style="--c:${e.color}"></span>`;
+
+const DEMO = new URLSearchParams(location.search).has('demo');
+const N = DEMO ? null : await import('./sala.js');
+const MOVIL_URL = location.origin + location.pathname.replace(/[^/]*$/, '') + 'movil.html';
+
+let CONF = null, nEquips = 5, triats = new Set(), yo = null, sala = null;
+
+async function soyProfe() { yo = { id: DEMO ? 'demo-profe' : N.elMeuId() }; return true; }
+
+/* ---------- so: un cop de martell sintetitzat (buffer de soroll filtrat, sense fitxers) ---------- */
+let ac = null, sorollBuf = null;
+function cop() {
+  try {
+    ac ??= new (window.AudioContext || window.webkitAudioContext)();
+    if (!sorollBuf) { sorollBuf = ac.createBuffer(1, ac.sampleRate * .25, ac.sampleRate); const d = sorollBuf.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = (Math.random() * 2 - 1) * Math.exp(-i / (ac.sampleRate * .018)); }
+    const t = ac.currentTime + .01, src = ac.createBufferSource(), f = ac.createBiquadFilter(), g = ac.createGain(), o = ac.createOscillator(), og = ac.createGain();
+    src.buffer = sorollBuf; f.type = 'lowpass'; f.frequency.value = 1400; g.gain.value = .9;
+    o.type = 'sine'; o.frequency.setValueAtTime(190, t); o.frequency.exponentialRampToValueAtTime(70, t + .12);
+    og.gain.setValueAtTime(.7, t); og.gain.exponentialRampToValueAtTime(.001, t + .16);
+    src.connect(f).connect(g).connect(ac.destination); o.connect(og).connect(ac.destination);
+    src.start(t); o.start(t); o.stop(t + .2);
+  } catch {}
+}
+
+/* ================= inici ================= */
+function pintarInici() {
+  $('#i-monedes').textContent = fmt(CONF.monedes);
+  $('#i-equips').innerHTML = [2, 3, 4, 5, 6].map(n => `<button type="button" data-n="${n}" aria-pressed="${n === nEquips}">${n}</button>`).join('');
+  $('#i-lots').innerHTML = CONF.valors.map(v => `<button class="lotc" type="button" data-id="${v.id}" aria-pressed="${triats.has(v.id)}"><span class="em">${v.emoji}</span><span><b>${esc(v.nom)}</b><small>${esc(v.desc)}</small></span></button>`).join('');
+  const n = triats.size;
+  $('#i-n').textContent = `${n} lots · ${nEquips} equips · uns ${Math.round(n * 1.5)} min`;
+  $('#i-obrir').disabled = n < 2;
+}
+$('#i-equips').addEventListener('click', e => { const b = e.target.closest('[data-n]'); if (b) { nEquips = +b.dataset.n; pintarInici(); } });
+$('#i-lots').addEventListener('click', e => { const b = e.target.closest('[data-id]'); if (!b) return; const id = b.dataset.id; triats.has(id) ? triats.delete(id) : triats.add(id); pintarInici(); });
+$('#i-obrir').onclick = () => obrirSala();
+
+/* ================= sala =================
+ * La pissarra és l'única font de veritat: saldos, pujes i adjudicacions. */
+function obrirSala() {
+  tancarSala();
+  let lots = CONF.valors.filter(v => triats.has(v.id));
+  if ($('#i-atzar').checked) lots = lots.map(v => [Math.random(), v]).sort((a, b) => a[0] - b[0]).map(x => x[1]);
+  sala = {
+    codi: DEMO ? '0000' : N.nouCodi(), canal: null, fase: 'equips',
+    equips: new Map(CONF.equips.slice(0, nEquips).map(e => [e.id, { ...e, saldo: CONF.monedes, cap: null, compres: [] }])),
+    capDe: new Map(), jugadors: new Set(), presents: new Set(), rebutjats: new Set(),
+    lots, li: -1, lot: null, resultats: [],
+  };
+  if (DEMO) iniciaDemo();
+  else sala.canal = N.connecta({ codi: sala.codi, uid: yo.id, prefix: 'tut-subhasta-', onMissatge: alMissatge, onPresencia: alPresencia,
+    onEstat: st => { if (st === 'error') toast('Connexió inestable… reintentant', 3000); } });
+  sala.enllac = `${MOVIL_URL}?c=${sala.codi}`;
+  $('#s-url').textContent = MOVIL_URL.replace(/^https?:\/\//, '');
+  $('#s-codi').textContent = sala.codi;
+  const qr = $('#s-qr'); qr.innerHTML = '';
+  if (window.QRCode) { new QRCode(qr, { text: sala.enllac, width: 220, height: 220, correctLevel: QRCode.CorrectLevel.M }); qr.hidden = false; } else qr.hidden = true;
+  pintarSala(); mostrar('#v-sala'); difondre(true);
+}
+function tancarSala() {
+  if (!sala) return;
+  difondre(true, 'cerrada');
+  clearInterval(sala.rellotgeT); clearInterval(sala.demoT);
+  setTimeout(((c) => () => c?.surt())(sala.canal), 300);
+  sala = null;
+}
+window.addEventListener('beforeunload', () => { if (sala?.canal) sala.canal.envia('estat', { s: { fase: 'cerrada' } }); });
+
+function alPresencia(uids) {
+  if (!sala) return;
+  sala.presents = new Set(uids);
+  uids.forEach(u => { if (u !== yo.id) sala.jugadors.add(u); });   // sala anònima: entra qui té el codi
+  canvi();
+}
+function alMissatge(m) {
+  if (!sala) return;
+  if (m.type === 'hola') { if (sala.rebutjats.has(m.from)) sala.canal.envia('fora', { uid: m.from }); else difondre(true); return; }
+  if (!sala.jugadors.has(m.from)) return;
+  if (m.type === 'equip') return reclamaEquip(m.from, m.e);
+  if (m.type === 'puja') return puja(m.from, m.q, m.lot);
+}
+function reclamaEquip(uid, id) {
+  const e = sala.equips.get(id);
+  if (!e || sala.capDe.has(uid)) return;
+  if (e.cap && e.cap !== uid) return sala.canal?.envia('rebutjada', { uid, motiu: 'Aquest equip ja té capità.' });
+  e.cap = uid; sala.capDe.set(uid, id); canvi();
+}
+function alliberar(id) {
+  const e = sala.equips.get(id); if (!e?.cap) return;
+  sala.capDe.delete(e.cap); e.cap = null; canvi();
+}
+
+/* ---------- pujes ---------- */
+const minimPer = () => sala.lot.puja ? sala.lot.puja + 10 : CONF.pujaMinima;
+function puja(uid, q, li) {
+  const l = sala.lot, id = sala.capDe.get(uid), e = sala.equips.get(id);
+  const no = motiu => sala.canal?.envia('rebutjada', { uid, motiu });
+  if (!e || !l || l.estat !== 'obert' || li !== sala.li) return;
+  if (!Number.isInteger(q) || q % 10) return no('Puja no vàlida.');
+  if (l.guanya === id) return no('Ja aneu guanyant.');
+  if (q < minimPer()) return no(`Algú ha pujat abans: ara el mínim és ${fmt(minimPer())}.`);
+  if (q > e.saldo) return no('No teniu prou monedes.');
+  l.puja = q; l.guanya = id; l.fi = performance.now() + CONF.segonsPuja * 1000; l.seq++;
+  canvi(true);
+}
+function obrirLot() {
+  Object.assign(sala.lot, { estat: 'obert', fi: performance.now() + CONF.segonsPrimera * 1000 });
+  clearInterval(sala.rellotgeT);
+  sala.rellotgeT = setInterval(() => {
+    const l = sala?.lot; if (!l || l.estat !== 'obert') return;
+    if (performance.now() >= l.fi) tancarLot(); else pintarRellotge();
+  }, 100);
+  canvi(true);
+}
+function tancarLot() {
+  const l = sala.lot; clearInterval(sala.rellotgeT);
+  if (l.guanya) {
+    const e = sala.equips.get(l.guanya);
+    e.saldo -= l.puja; e.compres.push({ ...l.valor, preu: l.puja });
+    l.estat = 'adjudicat'; cop();
+  } else l.estat = 'desert';
+  sala.resultats.push({ ...l.valor, preu: l.guanya ? l.puja : 0, equip: l.guanya });
+  canvi(true);
+}
+function seguentLot() {
+  sala.li++;
+  if (sala.li >= sala.lots.length) return final();
+  sala.fase = 'lot';
+  sala.lot = { valor: sala.lots[sala.li], estat: 'presentant', puja: 0, guanya: null, fi: 0, seq: 0 };
+  mostrar('#v-lot'); canvi(true);
+}
+
+/* ---------- difusió: estat públic (cap nom; els uid dels capitans només perquè cada mòbil sàpiga el seu equip) ---------- */
+let difT = null;
+function difondre(ara = false, forca = null) {
+  if (!sala?.canal) return;
+  if (!ara) { if (!difT) difT = setTimeout(() => { difT = null; difondre(true); }, 150); return; }
+  clearTimeout(difT); difT = null;
+  const l = sala.lot;
+  sala.canal.envia('estat', { s: {
+    fase: forca || sala.fase, pujaMinima: CONF.pujaMinima,
+    equips: [...sala.equips.values()].map(e => ({ id: e.id, nom: e.nom, color: e.color, forma: e.forma, saldo: e.saldo, cap: e.cap })),
+    lot: l && sala.fase === 'lot' ? { li: sala.li, total: sala.lots.length, nom: l.valor.nom, desc: l.valor.desc, emoji: l.valor.emoji, estat: l.estat, puja: l.puja, guanya: l.guanya, restaMs: l.estat === 'obert' ? Math.max(0, l.fi - performance.now()) : null, seq: l.seq } : null,
+    compres: sala.fase === 'final' ? [...sala.equips.values()].map(e => ({ id: e.id, compres: e.compres.map(c => ({ nom: c.nom, emoji: c.emoji, preu: c.preu })) })) : null,
+  } });
+}
+function canvi(ara = false) {
+  if (!sala) return;
+  if (sala.fase === 'equips') pintarSala();
+  if (sala.fase === 'lot') pintarLot();
+  difondre(ara);
+}
+
+/* ================= pintar ================= */
+function pintarSala() {
+  $('#s-equips').innerHTML = [...sala.equips.values()].map(e => `<div class="equip${e.cap ? ' ocupat' : ''}" style="--c:${e.color}">
+      <span class="nom">${forma(e)}${esc(e.nom)}</span>
+      <span class="estat">${e.cap ? '✓ Capità a punt' + (sala.presents.has(e.cap) || DEMO ? '' : ' · desconnectat') : 'Esperant capità…'}</span>
+      ${e.cap && !DEMO ? `<button class="btn alliberar" type="button" data-alliberar="${e.id}">Alliberar</button>` : ''}</div>`).join('');
+  const n = [...sala.equips.values()].filter(e => e.cap).length;
+  $('#s-comencar').disabled = n < 2;
+  $('#s-comencar').textContent = n < 2 ? 'Calen almenys 2 equips' : `Començar la subhasta · ${n} equips`;
+}
+$('#s-equips').addEventListener('click', e => { const b = e.target.closest('[data-alliberar]'); if (b) alliberar(b.dataset.alliberar); });
+
+const FRASES = [[6, 'A la una…'], [4, 'A les dues…'], [2, 'I a les tres…']];
+function pintarRellotge() {
+  const l = sala.lot, resta = Math.max(0, l.fi - performance.now()) / 1000;
+  const total = l.puja ? CONF.segonsPuja : CONF.segonsPrimera;
+  $('#l-rellotge').style.setProperty('--p', Math.min(1, resta / total));
+  $('#l-seg').textContent = Math.ceil(resta);
+  const f = l.puja ? FRASES.find(([s]) => resta <= s && resta > s - 2) : null;
+  $('#l-frase').textContent = f ? f[1] : (l.puja ? 'Algú dona més?' : 'Qui obre la puja?');
+}
+function pintarLot() {
+  const l = sala.lot, v = l.valor, g = l.guanya && sala.equips.get(l.guanya);
+  $('#l-num').textContent = `Lot ${sala.li + 1} de ${sala.lots.length}`;
+  $('#l-saldos').innerHTML = [...sala.equips.values()].filter(e => e.cap).map(e => `<span class="saldo${l.guanya === e.id ? ' lider' : ''}" style="--c:${e.color}">${forma(e)}<b>${fmt(e.saldo)}</b></span>`).join('');
+  $('#l-em').textContent = v.emoji; $('#l-nom').textContent = v.nom; $('#l-desc').textContent = v.desc;
+  $('#l-etiqueta').textContent = l.puja ? (l.estat === 'adjudicat' ? 'Adjudicat per' : 'Puja més alta') : 'Preu de sortida';
+  $('#l-puja').innerHTML = `${fmt(l.puja || CONF.pujaMinima)}<small>monedes</small>`;
+  $('#l-qui').innerHTML = g ? `<span class="xip-equip">${forma(g)}${esc(g.nom)}</span>` : (l.estat === 'obert' ? '<span style="color:var(--suau)">Encara ningú</span>' : '');
+  $('#l-compte').hidden = l.estat !== 'obert';
+  if (l.estat === 'obert') pintarRellotge();
+  const seg = $('#l-segell');
+  seg.hidden = !(l.estat === 'adjudicat' || l.estat === 'desert');
+  if (!seg.hidden) { seg.style.setProperty('--c', g ? g.color : 'var(--suau)'); seg.innerHTML = l.estat === 'adjudicat' ? '<span class="martell pica">🔨</span> Adjudicat' : 'Desert'; }
+  const ultim = sala.li === sala.lots.length - 1;
+  const accio = $('#l-accio'), des = $('#l-desert');
+  des.hidden = l.estat !== 'obert';
+  des.textContent = l.puja ? 'Adjudicar ara' : 'Declarar desert';
+  accio.hidden = l.estat === 'obert';
+  accio.innerHTML = l.estat === 'presentant' ? 'Obrir la subhasta<span class="tecla">Espai</span>' : (ultim ? 'Veure els resultats' : 'Següent lot') + '<span class="tecla">Espai</span>';
+}
+function accioLot() {
+  const l = sala?.lot; if (!l) return;
+  if (l.estat === 'presentant') obrirLot();
+  else if (l.estat === 'adjudicat' || l.estat === 'desert') seguentLot();
+}
+$('#l-accio').onclick = accioLot;
+$('#l-desert').onclick = () => { if (sala?.lot?.estat === 'obert') tancarLot(); };
+$('#l-acabar').onclick = () => { if (sala.lot?.estat === 'obert') tancarLot(); final(); };
+
+function final() {
+  sala.fase = 'final'; clearInterval(sala.rellotgeT); clearInterval(sala.demoT);
+  const eqs = [...sala.equips.values()].filter(e => e.cap);
+  $('#f-compres').innerHTML = eqs.map(e => `<div class="compra" style="--c:${e.color}">
+      <span class="titol">${forma(e)}${esc(e.nom)}</span>
+      ${e.compres.length ? `<ul>${e.compres.map(c => `<li>${c.emoji} ${esc(c.nom)} · <b>${fmt(c.preu)}</b></li>`).join('')}</ul>` : '<span class="sobra">No ha comprat res.</span>'}
+      <span class="sobra">Li sobren ${fmt(e.saldo)} monedes${e.saldo ? ', i ara ja no valen res' : ''}.</span></div>`).join('');
+  const venuts = sala.resultats.filter(r => r.preu).sort((a, b) => b.preu - a.preu), max = venuts[0]?.preu || 1;
+  $('#f-ranq').innerHTML = venuts.length ? venuts.map(r => `<div class="r"><span class="em">${r.emoji}</span><span>${esc(r.nom)}</span><span class="n">${fmt(r.preu)}</span><span class="p"><i data-w="${r.preu / max * 100}"></i></span></div>`).join('') : '<p class="desert">No s\'ha venut res.</p>';
+  const deserts = sala.resultats.filter(r => !r.preu);
+  $('#f-desert').textContent = deserts.length ? 'Ningú no ha volgut: ' + deserts.map(r => r.nom).join(', ') + '.' : '';
+  $('#f-debat').innerHTML = CONF.debat.map(q => `<li>${esc(q)}</li>`).join('');
+  mostrar('#v-final'); difondre(true);
+  requestAnimationFrame(() => requestAnimationFrame(() => document.querySelectorAll('#f-ranq i[data-w]').forEach(i => i.style.width = i.dataset.w + '%')));
+}
+
+$('#s-comencar').onclick = () => { cop(); seguentLot(); };   // el clic desbloqueja l'àudio
+$('#s-tornar').onclick = () => { tancarSala(); mostrar('#v-inici'); };
+$('#f-tancar').onclick = () => { tancarSala(); mostrar('#v-inici'); toast('Sala tancada'); };
+$('#f-nova').onclick = () => { tancarSala(); mostrar('#v-inici'); };
+document.addEventListener('keydown', e => {
+  if (e.code !== 'Space' || e.target.closest?.('button,input')) return;
+  if (sala?.fase === 'lot') { e.preventDefault(); accioLot(); }
+});
+
+/* ================= demo: equips robot amb preferències pròpies ================= */
+function iniciaDemo() {
+  $('#demo').hidden = false;
+  [...sala.equips.values()].forEach((e, i) => { const u = 'capita-' + i; sala.jugadors.add(u); sala.presents.add(u); reclamaEquip(u, e.id); });
+  const gust = new Map();   // equip → lot → fins on arribaria
+  sala.demoT = setInterval(() => {
+    const l = sala?.lot; if (!l || l.estat !== 'obert' || Math.random() < .45) return;
+    const eqs = [...sala.equips.values()].filter(e => e.id !== l.guanya);
+    const e = eqs[Math.floor(Math.random() * eqs.length)]; if (!e) return;
+    const k = e.id + l.valor.id;
+    if (!gust.has(k)) gust.set(k, Math.random() < .35 ? 0 : Math.round(e.saldo * Math.random() * .7 / 10) * 10);
+    const q = minimPer() + [0, 40, 90][Math.floor(Math.random() * 3)];
+    if (q <= gust.get(k)) puja(e.cap, q, sala.li);
+  }, 700);
+}
+
+/* ================= inici ================= */
+(async () => {
+  try { CONF = await fetch('valors.json').then(r => r.json()); }
+  catch { return toast('No s\'han pogut carregar els valors', 5000); }
+  triats = new Set(CONF.valors.map(v => v.id));
+  await soyProfe();
+  pintarInici(); mostrar('#v-inici');
+})();
+</script>
+</body>
+</html>

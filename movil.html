@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ca">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0c2e24">
+<title>La subhasta · Capità</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Atkinson+Hyperlegible:wght@400;700&display=swap">
+<style>
+:root{
+  --tapet:#0c2e24; --tapet2:#123d30; --placa:#164a3a; --linia:#2a6450;
+  --or:#d9b05b; --or2:#f3d58b; --crema:#f5eedc; --suau:#b9cfc3; --fosc:#0a1f18;
+  --display:"DM Serif Display",Georgia,serif;
+  --text:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --c:var(--or);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+html,body{height:100%;margin:0}
+body{background:var(--tapet);color:var(--crema);font:400 17px/1.45 var(--text);padding:env(safe-area-inset-top,0px) 16px env(safe-area-inset-bottom,0px);display:flex;flex-direction:column}
+button,input{font:inherit;color:inherit}
+h1,h2{font-family:var(--display);font-weight:400;margin:0;line-height:1.05;text-wrap:balance}
+p{margin:0}
+.barra{display:flex;align-items:center;justify-content:space-between;gap:10px;padding-block:12px;min-height:56px}
+.barra .equip{display:flex;align-items:center;gap:8px;font:400 22px var(--display)}
+.barra .saldo{background:var(--tapet2);border:1.5px solid var(--c);border-radius:99px;padding:4px 14px;font-weight:700;font-variant-numeric:tabular-nums}
+.pantalla{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:16px;padding-block:16px 28px}
+.logo{font:400 clamp(44px,13vw,60px)/1 var(--display)}
+.logo i{color:var(--or)}
+.sub{color:var(--suau);max-width:32ch}
+form{display:flex;flex-direction:column;gap:12px;width:min(340px,100%)}
+.entrada{width:100%;border:0;border-radius:14px;padding:14px;background:var(--crema);color:var(--fosc);text-align:center;font:400 42px var(--display);letter-spacing:.2em}
+.btn{border:0;border-radius:14px;padding:15px;font:700 20px var(--text);background:linear-gradient(180deg,var(--or2),var(--or));color:var(--fosc);box-shadow:0 5px 0 #0008}
+.btn:active{transform:translateY(3px);box-shadow:0 2px 0 #0008}
+.btn:disabled{opacity:.4;box-shadow:none}
+.error{background:#b3362f;border-radius:12px;padding:10px 14px;font-weight:700}
+.qui{background:var(--tapet2);border-radius:12px;padding:8px 14px;font-weight:700;font-size:14px}
+.icona{font-size:66px;line-height:1}
+.gran{font-size:clamp(30px,9vw,40px)}
+
+.forma{width:1em;height:1em;display:inline-block;flex:none;background:var(--fc)}
+.f-triangle{clip-path:polygon(50% 5%,97% 93%,3% 93%)} .f-rombe{clip-path:polygon(50% 2%,98% 50%,50% 98%,2% 50%)}
+.f-cercle{border-radius:50%} .f-quadrat{transform:scale(.86)}
+.f-estrella{clip-path:polygon(50% 2%,61% 36%,98% 36%,68% 58%,79% 94%,50% 72%,21% 94%,32% 58%,2% 36%,39% 36%)}
+.f-hexagon{clip-path:polygon(25% 5%,75% 5%,100% 50%,75% 95%,25% 95%,0 50%)}
+
+.equips{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:420px}
+.eq{border:2px solid var(--ec);background:var(--tapet2);border-radius:16px;padding:16px 10px;display:flex;flex-direction:column;align-items:center;gap:8px;font:400 20px var(--display)}
+.eq .forma{width:34px;height:34px}
+.eq:disabled{opacity:.35}
+.eq small{font:700 13px var(--text);color:var(--suau)}
+
+/* pujar */
+.lot{flex:1;display:flex;flex-direction:column;gap:14px;padding-bottom:16px}
+.lot .cap{display:flex;align-items:center;gap:12px}
+.lot .em{font-size:44px;line-height:1}
+.lot h2{font-size:26px}
+.taula{background:linear-gradient(180deg,#174d3c,#0f3a2d);border:2px solid var(--or);border-radius:20px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.taula .et{font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or2)}
+.taula .p{font:400 52px/1 var(--display);font-variant-numeric:tabular-nums}
+.taula .q{display:flex;align-items:center;gap:8px;font-weight:700;min-height:1.4em}
+.taula .t{display:flex;justify-content:space-between;align-items:center;color:var(--or2);font:400 italic 22px var(--display)}
+.taula .t b{font-style:normal}
+.pujes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pujes .btn{font-size:19px;padding:18px 10px}
+.pujes .tot{grid-column:1/-1;background:var(--tapet2);color:var(--crema);border:2px solid var(--or)}
+.avis{text-align:center;font-weight:700;min-height:1.5em;color:var(--suau)}
+.avis.ok{color:var(--or2)}
+.avis.mal{color:#ff8a80}
+.compres{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;width:100%;max-width:420px;text-align:left}
+.compres li{background:var(--tapet2);border-radius:12px;padding:10px 14px;display:flex;justify-content:space-between;gap:10px;font-weight:700}
+.xarxa{position:fixed;left:50%;transform:translateX(-50%);top:calc(8px + env(safe-area-inset-top,0px));background:var(--tapet2);border-radius:99px;padding:4px 12px;font-size:13px;font-weight:700}
+</style>
+</head>
+<body>
+<div class="xarxa" id="xarxa" hidden>Reconnectant…</div>
+<div class="barra" id="barra" hidden><span class="equip" id="b-equip"></span><span class="saldo" id="b-saldo"></span></div>
+
+<main class="pantalla" id="p-entrar">
+  <div class="logo">La <i>subhasta</i></div>
+  <form id="f-entrar" autocomplete="off">
+    <input class="entrada" id="codi" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="0000" aria-label="Codi de la sala" required>
+    <div class="qui" id="qui" hidden></div>
+    <button class="btn" id="b-entrar" disabled>Entrar</button>
+    <div class="error" id="e-entrar" hidden></div>
+  </form>
+</main>
+
+<main class="pantalla" id="p-equip" hidden>
+  <h1 class="gran">Quin és el teu equip?</h1>
+  <p class="sub">Tria el color que el profe ha donat al teu equip. Seràs el capità: tu fas les pujes.</p>
+  <div class="equips" id="e-llista"></div>
+</main>
+
+<main class="pantalla" id="p-info" hidden>
+  <div id="i-visual"></div>
+  <h1 class="gran" id="i-titol"></h1>
+  <p class="sub" id="i-sub"></p>
+  <div id="i-extra" style="width:100%;display:flex;flex-direction:column;align-items:center;gap:12px"></div>
+</main>
+
+<main class="lot" id="p-lot" hidden>
+  <div class="cap"><span class="em" id="l-em"></span><div><span class="avis" id="l-num" style="text-align:left;display:block"></span><h2 id="l-nom"></h2></div></div>
+  <div class="taula">
+    <span class="et" id="l-et"></span>
+    <span class="p" id="l-p"></span>
+    <span class="q" id="l-q"></span>
+    <span class="t" id="l-t" hidden><span id="l-frase"></span><b id="l-seg"></b></span>
+  </div>
+  <div class="pujes" id="l-pujes"></div>
+  <p class="avis" id="l-avis" aria-live="polite"></p>
+</main>
+
+<script type="module">
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fmt = n => n.toLocaleString('ca');
+const forma = e => `<span class="forma f-${e.forma}" style="--fc:${e.color}"></span>`;
+const DEMO = new URLSearchParams(location.search).has('demo');
+const N = DEMO ? null : await import('./sala.js');
+
+let codi = null, uid = null, canal = null, estat = null, espera = null, fi = 0, rellotge = null, avisT = null;
+
+$('#codi').value = new URLSearchParams(location.search).get('c') || '';
+const ver = id => { ['#p-entrar', '#p-equip', '#p-info', '#p-lot'].forEach(p => $(p).hidden = p !== id); };
+function info({ visual = '', titol = '', sub = '', extra = '' }) { $('#i-visual').innerHTML = visual; $('#i-titol').textContent = titol; $('#i-sub').textContent = sub; $('#i-extra').innerHTML = extra; ver('#p-info'); }
+const error = m => { const e = $('#e-entrar'); e.textContent = m; e.hidden = false; };
+function avis(m, tipus = '') { const a = $('#l-avis'); a.textContent = m; a.className = 'avis ' + tipus; clearTimeout(avisT); if (tipus === 'mal') avisT = setTimeout(() => pintar(estat), 2600); }
+
+(async () => {
+  if (DEMO) return demo();
+  uid = N.elMeuId();
+  $('#qui').textContent = 'Entres de manera anònima: ningú no sabrà qui ets'; $('#qui').hidden = false;
+  $('#b-entrar').disabled = false;
+  setTimeout(() => { if ($('#codi').value) $('#f-entrar').requestSubmit(); else $('#codi').focus(); });   // quan el formulari ja té el seu onsubmit
+})();
+
+$('#f-entrar').onsubmit = e => {
+  e.preventDefault();
+  const c = $('#codi').value.trim();
+  if (!/^\d{4}$/.test(c)) return error('El codi té 4 números');
+  $('#e-entrar').hidden = true; $('#b-entrar').disabled = true;
+  codi = c;
+  canal?.surt();
+  canal = N.connecta({ codi: c, uid, prefix: 'tut-subhasta-', onMissatge: alMissatge,
+    onEstat: st => { $('#xarxa').hidden = st === 'ok'; if (st === 'ok') canal.envia('hola'); } });
+  clearTimeout(espera);
+  espera = setTimeout(() => { if (!estat) { canal?.surt(); canal = null; error('No hi ha cap subhasta amb aquest codi'); $('#b-entrar').disabled = false; } }, 6000);
+};
+
+function alMissatge(m) {
+  if (m.type === 'fora' && m.uid === uid) { clearTimeout(espera); canal?.surt(); canal = null; estat = null; ver('#p-entrar'); error('No pots entrar en aquesta subhasta.'); $('#b-entrar').disabled = false; return; }
+  if (m.type === 'rebutjada' && m.uid === uid) { navigator.vibrate?.([50, 40, 50]); return avis(m.motiu, 'mal'); }
+  if (m.type !== 'estat') return;
+  if (!estat) { clearTimeout(espera); if (!DEMO) history.replaceState(null, '', `?c=${codi}`); }
+  pintar(m.s);
+}
+
+const meu = s => s.equips.find(e => e.cap === uid);
+
+function pintar(s) {
+  const prev = estat; estat = s; if (!s) return;
+  clearInterval(rellotge);
+  if (s.fase === 'cerrada') { canal?.surt(); canal = null; $('#barra').hidden = true; return info({ visual: '<div class="icona">👋</div>', titol: 'Subhasta tancada', sub: 'Gràcies per participar!' }); }
+  const e = meu(s);
+  $('#barra').hidden = !e;
+  if (e) {
+    document.documentElement.style.setProperty('--c', e.color);
+    $('#b-equip').innerHTML = forma(e) + esc(e.nom);
+    $('#b-saldo').textContent = fmt(e.saldo) + ' monedes';
+  }
+  if (!e) {
+    const lliures = s.equips.filter(x => !x.cap);
+    if (!lliures.length) return info({ visual: '<div class="icona">👀</div>', titol: 'Tots els equips tenen capità', sub: 'Segueix la subhasta a la pantalla gran i ajuda el teu equip a decidir.' });
+    $('#e-llista').innerHTML = s.equips.map(x => `<button class="eq" type="button" data-e="${x.id}" style="--ec:${x.color}" ${x.cap ? 'disabled' : ''}>${forma(x)}${esc(x.nom.replace('Equip ', ''))}${x.cap ? '<small>Ja té capità</small>' : ''}</button>`).join('');
+    return ver('#p-equip');
+  }
+  if (s.fase === 'equips') return info({ visual: '<div class="icona">🔨</div>', titol: 'Ets el capità!', sub: `Teniu ${fmt(e.saldo)} monedes. Quan comenci, les pujes es fan des d'aquí.`, extra: '<div class="qui">Decidiu en equip, i en veu baixa, fins on voleu arribar per cada valor.</div>' });
+  if (s.fase === 'final') {
+    const c = s.compres?.find(x => x.id === e.id)?.compres || [];
+    return info({ visual: '<div class="icona">🏆</div>', titol: 'Subhasta acabada', sub: c.length ? 'Això és el que s\'ha quedat el vostre equip:' : 'El vostre equip no ha comprat res.',
+      extra: (c.length ? `<ul class="compres">${c.map(x => `<li><span>${x.emoji} ${esc(x.nom)}</span><span>${fmt(x.preu)}</span></li>`).join('')}</ul>` : '') + `<div class="qui">Us sobren ${fmt(e.saldo)} monedes. Ara ja no valen res.</div>` });
+  }
+  if (s.fase !== 'lot' || !s.lot) return;
+  const l = s.lot, lider = l.guanya && s.equips.find(x => x.id === l.guanya);
+  $('#l-num').textContent = `Lot ${l.li + 1} de ${l.total}`;
+  $('#l-em').textContent = l.emoji; $('#l-nom').textContent = l.nom;
+  $('#l-et').textContent = l.estat === 'adjudicat' ? 'Adjudicat' : l.puja ? 'Puja més alta' : 'Preu de sortida';
+  $('#l-p').textContent = fmt(l.puja || s.pujaMinima);
+  $('#l-q').innerHTML = lider ? (lider.id === e.id ? '<span style="color:var(--or2)">★ Aneu guanyant vosaltres</span>' : forma(lider) + esc(lider.nom)) : '';
+  $('#l-t').hidden = l.estat !== 'obert';
+  if (l.estat === 'obert') {
+    if (!prev?.lot || prev.lot.seq !== l.seq || prev.lot.estat !== 'obert') fi = performance.now() + l.restaMs;
+    const tic = () => { const r = Math.max(0, fi - performance.now()) / 1000; $('#l-seg').textContent = Math.ceil(r) + ' s'; $('#l-frase').textContent = !l.puja ? 'Qui obre la puja?' : r <= 2 ? 'I a les tres…' : r <= 4 ? 'A les dues…' : r <= 6 ? 'A la una…' : 'Algú dona més?'; };
+    tic(); rellotge = setInterval(tic, 200);
+  }
+  pintaPujes(s, l, e);
+  if (l.estat === 'presentant') avis('Ara surt a subhasta. Decidiu quant hi voleu posar.');
+  else if (l.estat === 'adjudicat') { const nostre = l.guanya === e.id; if (nostre && prev?.lot?.estat === 'obert') navigator.vibrate?.(200); avis(nostre ? `🔨 És vostre per ${fmt(l.puja)} monedes!` : `🔨 Adjudicat a ${lider?.nom || '…'}`, nostre ? 'ok' : ''); }
+  else if (l.estat === 'desert') avis('Desert: ningú no l\'ha volgut.');
+  else if (l.guanya === e.id) avis('Aneu guanyant. Espereu…', 'ok');
+  else if (!$('#l-avis').classList.contains('mal')) avis('');
+  ver('#p-lot');
+}
+function pintaPujes(s, l, e) {
+  const min = l.puja ? l.puja + 10 : s.pujaMinima, base = l.puja || 0;
+  const opc = [...new Set([min, Math.max(min, base + 50), Math.max(min, base + 100)])];
+  const obert = l.estat === 'obert', guanyem = l.guanya === e.id;
+  $('#l-pujes').innerHTML = opc.map(q => `<button class="btn" type="button" data-q="${q}" ${!obert || guanyem || q > e.saldo ? 'disabled' : ''}>Pujar a ${fmt(q)}</button>`).join('')
+    + `<button class="btn tot" type="button" data-q="${e.saldo}" ${!obert || guanyem || e.saldo < min ? 'disabled' : ''}>Tot: ${fmt(e.saldo)}</button>`;
+}
+$('#l-pujes').addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-q]'); if (!b || b.disabled) return;
+  const q = +b.dataset.q; navigator.vibrate?.(25);
+  avis(`Pujant a ${fmt(q)}…`);
+  $('#l-pujes').querySelectorAll('button').forEach(x => x.disabled = true);
+  if (DEMO) return demoPuja(q);
+  try { await canal.envia('puja', { q, lot: estat.lot.li }); } catch { avis('No ha arribat. Torna-ho a provar.', 'mal'); }
+});
+$('#e-llista').addEventListener('click', async ev => {
+  const b = ev.target.closest('[data-e]'); if (!b || b.disabled) return;
+  if (DEMO) { estat.equips.find(x => x.id === b.dataset.e).cap = uid; return pintar({ ...estat }); }
+  try { await canal.envia('equip', { e: b.dataset.e }); } catch {}
+});
+document.addEventListener('visibilitychange', () => { if (!document.hidden && canal) canal.envia('hola'); });
+
+/* demo: ?demo&f=equip|lot */
+async function demo() {
+  const conf = await fetch('valors.json').then(r => r.json());
+  uid = 'jo';
+  const f = new URLSearchParams(location.search).get('f') || 'lot';
+  const equips = conf.equips.slice(0, 5).map((e, i) => ({ ...e, saldo: 1000, cap: f === 'equip' ? (i === 1 ? 'altre' : null) : (i === 0 ? 'jo' : 'altre' + i) }));
+  const v = conf.valors[3];
+  pintar({ fase: f === 'equip' ? 'equips' : 'lot', pujaMinima: conf.pujaMinima, equips, lot: { li: 2, total: 12, nom: v.nom, desc: v.desc, emoji: v.emoji, estat: 'obert', puja: 120, guanya: 'blau', restaMs: 7000, seq: 1 } });
+}
+function demoPuja(q) { const s = structuredClone(estat); s.lot.puja = q; s.lot.guanya = meu(s).id; s.lot.seq++; s.lot.restaMs = 8000; setTimeout(() => pintar(s), 250); }
+</script>
+</body>
+</html>

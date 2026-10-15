@@ -1,0 +1,35 @@
+{
+  "versio": 1,
+  "monedes": 1000,
+  "pujaMinima": 50,
+  "segonsPrimera": 20,
+  "segonsPuja": 8,
+  "equips": [
+    { "id": "coral",   "nom": "Equip Coral",   "color": "#ff6b5b", "forma": "triangle" },
+    { "id": "blau",    "nom": "Equip Blau",    "color": "#4f8cff", "forma": "rombe" },
+    { "id": "groc",    "nom": "Equip Groc",    "color": "#f2c94c", "forma": "cercle" },
+    { "id": "verd",    "nom": "Equip Verd",    "color": "#3ecf8e", "forma": "quadrat" },
+    { "id": "lila",    "nom": "Equip Lila",    "color": "#a78bfa", "forma": "estrella" },
+    { "id": "taronja", "nom": "Equip Taronja", "color": "#ff9f43", "forma": "hexagon" }
+  ],
+  "valors": [
+    { "id": "aprovar",  "emoji": "📚", "nom": "Aprovar sense estudiar", "desc": "Tot aprovat fins a 4t sense obrir un llibre." },
+    { "id": "amic",     "emoji": "🤝", "nom": "Un amic de veritat", "desc": "Algú que sempre hi és, passi el que passi." },
+    { "id": "famos",    "emoji": "📱", "nom": "Ser famós a les xarxes", "desc": "Un milió de seguidors demà mateix." },
+    { "id": "salut",    "emoji": "💪", "nom": "Salut perfecta", "desc": "No posar-te malalt mai, en tota la vida." },
+    { "id": "milio",    "emoji": "💶", "nom": "Un milió d'euros", "desc": "Ara mateix, al teu compte." },
+    { "id": "feina",    "emoji": "🚀", "nom": "La feina dels teus somnis", "desc": "Assegurada quan acabis d'estudiar." },
+    { "id": "familia",  "emoji": "🏡", "nom": "Una família que et recolza", "desc": "Que t'escoltin i hi siguin sempre." },
+    { "id": "guapo",    "emoji": "✨", "nom": "Que tothom et trobi guapo o guapa", "desc": "Agradar a tothom només de mirar-te." },
+    { "id": "saber",    "emoji": "🧠", "nom": "Saber-ho tot", "desc": "Tots els idiomes i totes les matèries, sense esforç." },
+    { "id": "pau",      "emoji": "🕊️", "nom": "No discutir mai amb ningú", "desc": "Pau absoluta amb tothom." },
+    { "id": "viatjar",  "emoji": "🌍", "nom": "Un any viatjant pel món", "desc": "On vulguis, tot pagat." },
+    { "id": "jomateix", "emoji": "🪞", "nom": "Agradar-te tal com ets", "desc": "Estar bé amb tu, sense comparar-te amb ningú." }
+  ],
+  "debat": [
+    "Quin valor s'ha pagat més car? Per què creieu que l'han volgut tant?",
+    "Quin ha quedat barat o sense vendre? Ho mereixia?",
+    "Quins d'aquests valors es poden comprar de veritat amb diners?",
+    "Si tornéssiu a començar amb 1000 monedes, què canviaríeu?"
+  ]
+}
